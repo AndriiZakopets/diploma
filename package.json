@@ -10,6 +10,7 @@
     "body-parser": "^1.20.0",
     "concurrently": "^7.2.2",
     "cra-template-typescript": "1.2.0",
+    "cross-env": "^7.0.3",
     "express": "^4.18.1",
     "nodemon": "^2.0.16",
     "react": "^18.2.0",
@@ -27,7 +28,7 @@
     "dev:server": "concurrently -p name -c \"yellow,magenta\" -n \"webpack-server,nodemon-server\" \"npm run dev:server:webpack\" \"npm run dev:server:nodemon\"",
     "dev:server:webpack": "webpack --config webpack.config.server.js --watch",
     "dev:server:nodemon": "rm -f build/server.js && wait-on -l build/server.js && nodemon build/server.js",
-    "start": "node ./build/server.js",
+    "start": "cross-env MODE=production node ./build/server.js",
     "build": "npm run build:client && npm run build:server",
     "build:client": "react-scripts build",
     "build:server": "webpack --config webpack.config.server.js"
