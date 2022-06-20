@@ -1,14 +1,22 @@
 import express from 'express';
+import mongoose from 'mongoose';
 import bodyParser from 'body-parser';
 import rootRouter from './routes';
-
-const port = process.env.MODE === 'production' ? process.env.PORT : 3001;
+import { PORT, MONGO_URI } from './config';
 
 const app = express();
 app.use(bodyParser.json());
-
 app.use('/', rootRouter);
+startDb();
 
-app.listen(port, () => {
-  console.log(`Server now listening on port: ${port}`);
-});
+async function startDb() {
+  try {
+    mongoose.connect(MONGO_URI, () => console.log('Mongoose is connected'));
+    app.listen(PORT, () =>
+      console.log(`Server has been started on port ${PORT}...`)
+    );
+  } catch (err: any) {
+    console.error('Server Error: ', err.message);
+    process.exit(1);
+  }
+}

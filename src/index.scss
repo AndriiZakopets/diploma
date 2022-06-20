@@ -1,0 +1,19 @@
+@font-face {
+  font-family: varela;
+  src: url('./VarelaRound-Regular.ttf');
+}
+
+body {
+  margin: 0;
+  font-family: varela round, helvetica neue, Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+*,
+*::after,
+*::before {
+  box-sizing: border-box;
+  font-size: 14px;
+  line-height: 1.428571429;
+}
