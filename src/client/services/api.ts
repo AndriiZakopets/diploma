@@ -2,6 +2,7 @@ import axios from 'axios';
 import authHeader from './authHeader';
 
 const authorizedAxios = axios.create();
+const TMDB_API_KEY = 'e6697575f73e774c8f8a2de43ed63b68';
 
 authorizedAxios.interceptors.request.use(async function (config) {
   return {
@@ -19,4 +20,13 @@ export const login = (values) => {
 
 export const signUp = (values) => {
   return axios.post('/api/auth/signup', values);
+};
+
+export const tmdbGet = (path, params = {}) => {
+  return axios.get(`https://api.themoviedb.org/3${path}`, {
+    params: {
+      api_key: TMDB_API_KEY,
+      ...params,
+    },
+  });
 };

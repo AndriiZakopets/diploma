@@ -15,15 +15,15 @@ function Header() {
           Home
         </NavigationLink>
       </nav>
-      {user === null ? (
+      {user ? (
+        <UserHeading user={user} />
+      ) : (
         <div style={{ display: 'flex', gap: 8, marginRight: 8 }}>
           <NavigationLink href={routes.signUp}>Sign up</NavigationLink>
           <NavigationLink variant="text" href={routes.login}>
             Sign in
           </NavigationLink>
         </div>
-      ) : (
-        <UserHeading user={user} />
       )}
     </header>
   );
