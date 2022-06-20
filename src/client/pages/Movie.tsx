@@ -23,7 +23,6 @@ function Movie() {
       setReviews(data.results);
     });
   }, []);
-  console.log(reviews);
 
   if (!movie || !reviews) return null;
 
@@ -57,19 +56,7 @@ function Movie() {
                 </h2>
               </div>
               <div className={styles.score}>
-                <div>
-                  <CircularProgressbar
-                    background
-                    styles={buildStyles({
-                      backgroundColor: '#081c22',
-                      textColor: 'white',
-                      pathColor: '#21d07a',
-                      trailColor: '#204529',
-                    })}
-                    value={movie.vote_average * 10}
-                    text={`${Math.floor(movie.vote_average * 10)}%`}
-                  />
-                </div>
+                <div>{movie.vote_average * 10} %</div>
                 <span>User Score</span>
               </div>
               <div className={styles.info}>
