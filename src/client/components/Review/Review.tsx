@@ -16,14 +16,16 @@ function Review({ review }: Props) {
     [review]
   );
   const avatarBaseUrl = 'https://www.gravatar.com/avatar';
-  const avatarPath = review.author_details.avatar_path.split('/').at(-1);
-  const avatarSrc = `${avatarBaseUrl}/${avatarPath}`;
+  const avatarPath =
+    review.author_details.avatar_path &&
+    review.author_details.avatar_path.split('/').at(-1);
+  const avatarSrc = avatarPath && `${avatarBaseUrl}/${avatarPath}`;
 
   return (
     <div className={styles.container}>
       <div className={styles.grouped}>
         <div className={styles.avatar}>
-          {review.author_details.avatar_path ? (
+          {avatarSrc ? (
             <img loading="lazy" src={avatarSrc} alt={review.author} />
           ) : (
             <span>{review.author[0]}</span>
