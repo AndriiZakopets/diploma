@@ -1,5 +1,6 @@
-import jwt from 'jsonwebtoken';
 import bcrypt from 'bcrypt';
+import jwt from 'jsonwebtoken';
+
 import User from '../../models/User';
 import { HASH, JWT_SECRET } from '../../config';
 
@@ -50,6 +51,7 @@ export const signup = async (req: any, res: any) => {
     if (candidateUsername) {
       return res.status(400).send({ error: 'Username is already used' });
     }
+
     const passwordHash = await bcrypt.hash(password, HASH.bcrypt.saltRounds);
 
     const user: any = await User.create({
