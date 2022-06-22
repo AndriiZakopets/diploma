@@ -25,6 +25,8 @@ export const signUpValidationSchema = yup.object().shape({
 });
 
 export const loginValidationSchema = yup.object().shape({
-  email: yup.string(),
-  password: yup.string(),
+  email: yup.string().required(`body should have required property 'email'`),
+  password: yup
+    .string()
+    .required(`body should have required property 'password'`),
 });

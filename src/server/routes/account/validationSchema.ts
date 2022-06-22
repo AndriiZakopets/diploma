@@ -5,7 +5,7 @@ export const updateAccountValidationSchema = yup
   .shape({
     username: yup
       .string()
-      .defined(`body should have required property 'fullName'`)
+      .required(`body should have required property 'fullName'`)
       .min(1, 'Name can not be blank.'),
   })
   .strict(true);

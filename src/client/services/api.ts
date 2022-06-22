@@ -2,7 +2,6 @@ import axios from 'axios';
 import authHeader from './authHeader';
 
 const authorizedAxios = axios.create();
-const TMDB_API_KEY = 'e6697575f73e774c8f8a2de43ed63b68';
 
 authorizedAxios.interceptors.request.use(async function (config) {
   return {
