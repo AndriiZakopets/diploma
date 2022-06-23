@@ -1,6 +1,5 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
-import { RootState } from '../../redux';
+import { useSelector } from '../../redux';
 import { Link } from 'react-router-dom';
 import styles from './Auth.module.scss';
 import { Navigate } from 'react-router-dom';
@@ -12,8 +11,8 @@ type Props = {
 };
 
 function Auth({ children, footer }: Props) {
-  const authError = useSelector((state: RootState) => state.auth.error);
-  const user = useSelector((state: RootState) => state.app.user);
+  const authError = useSelector((state) => state.auth.error);
+  const user = useSelector((state) => state.app.user);
 
   return (
     <>

@@ -1,13 +1,12 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector } from '../../redux';
 import NavigationLink from '../NavigationLink';
 import UserHeading from '../UserHeading';
 import * as routes from '../../constants/routes';
-import { RootState } from '../../redux';
 import styles from './Layout.module.scss';
 
 function Header() {
-  const user = useSelector((state: RootState) => state.app.user);
+  const user = useSelector((state) => state.app.user);
   return (
     <header className={styles.header}>
       <nav className={styles.nav}>

@@ -4,7 +4,7 @@ import * as localStorageSession from '../../utils/localStorageSession';
 
 export const login = createAsyncThunk('auth/login', async (values: any) => {
   try {
-    const { data } = await api.login(values);
+    const data = await api.login(values);
     localStorageSession.setAuth(data);
 
     return data;
@@ -15,7 +15,7 @@ export const login = createAsyncThunk('auth/login', async (values: any) => {
 
 export const signup = createAsyncThunk('auth/signup', async (values: any) => {
   try {
-    const { data } = await api.signUp(values);
+    const data = await api.signUp(values);
     localStorageSession.setAuth(data);
 
     return data;

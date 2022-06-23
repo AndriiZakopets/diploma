@@ -5,11 +5,11 @@ import { requiredAuth } from '../../middlewares';
 
 const router = express.Router();
 
-router.get('/movies', handlers.getMovies);
-router.get('/movies/:movieId', handlers.getMovie);
-router.get('/movies/:movieId/reviews', handlers.getMovieReviews);
+router.get('/', handlers.getMovies);
+router.get('/:movieId', handlers.getMovie);
+router.get('/:movieId/reviews', handlers.getMovieReviews);
 router.post(
-  '/movies/:movieId/reviews',
+  '/:movieId/reviews',
   requiredAuth,
   validators.createReview,
   handlers.createReview

@@ -4,3 +4,10 @@ export type User = {
   email: string;
   about: string;
 };
+
+export type Review = {
+  id: string;
+  author: string;
+  content: string;
+  createdAt: string;
+};

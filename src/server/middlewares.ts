@@ -10,13 +10,15 @@ export const requiredAuth = async (req: any, res: any, next: any) => {
     });
   }
 
-  jwt.verify(token, JWT_SECRET, (err, decoded: any) => {
+  const decoded: any = jwt.decode(token);
+
+  jwt.verify(token, JWT_SECRET, (err) => {
     if (err) {
       return res.status(401).send({
         message: 'Unauthorized',
       });
     }
-    req.userId = decoded.id;
+    req.userId = decoded.userId;
     next();
   });
 };

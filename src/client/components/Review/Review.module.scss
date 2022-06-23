@@ -1,8 +1,21 @@
+@keyframes newBackground {
+  from {
+    background-color: #ffff0022;
+  }
+  to {
+    background-color: white;
+  }
+}
+
 .container {
   width: 100%;
   padding: 20px;
   border: 1px solid #e3e3e3;
-  border-radius: 8px;
+  border-radius: 6px;
+
+  &.new {
+    animation: newBackground 5s cubic-bezier(0.7, 0, 0.9, 0);
+  }
 }
 
 .grouped {
@@ -76,7 +89,7 @@
 }
 
 .teaser {
-  padding: 20px 0 0 84px;
+  padding: 20px 0 0 53px;
 
   p {
     margin-bottom: 16px;

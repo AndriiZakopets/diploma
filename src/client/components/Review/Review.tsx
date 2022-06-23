@@ -1,5 +1,7 @@
 import React from 'react';
+import cn from 'classnames';
 import moment from 'moment';
+import UserAvatar from '../UserAvatar';
 import styles from './Review.module.scss';
 
 type Props = {
@@ -7,45 +9,22 @@ type Props = {
 };
 
 function Review({ review }: Props) {
-  const paragraphs = React.useMemo(
-    () =>
-      review.content
-        .split('\r\n')
-        .filter((text) => text.length > 0)
-        .map((text) => text.replace(/(<([^>]+)>)/gi, '')),
-    [review]
-  );
-  const avatarBaseUrl = 'https://www.gravatar.com/avatar';
-  const avatarPath =
-    review.author_details.avatar_path &&
-    review.author_details.avatar_path.split('/').at(-1);
-  const avatarSrc = avatarPath && `${avatarBaseUrl}/${avatarPath}`;
-
   return (
-    <div className={styles.container}>
+    <div className={cn(styles.container, { [styles.new]: review.isNew })}>
       <div className={styles.grouped}>
         <div className={styles.avatar}>
-          {avatarSrc ? (
-            <img loading="lazy" src={avatarSrc} alt={review.author} />
-          ) : (
-            <span>{review.author[0]}</span>
-          )}
+          <UserAvatar username={review.author} />
         </div>
         <div className={styles.info}>
           <div className={styles.ratingWrapper}>
             <h3>A review by {review.author}</h3>
-            <div className={styles.rating}>
-              {(review.author_details.rating || 0).toFixed(1)}
-            </div>
           </div>
-          <h5>
-            Written on {moment(review.created_at).format('MMMM DD, YYYY')}
-          </h5>
+          <h5>Written on {moment(review.createdAt).format('MMMM DD, YYYY')}</h5>
         </div>
       </div>
       <div className={styles.teaser}>
-        {paragraphs.map((p, i) => (
-          <p key={i}>{p}</p>
+        {review.content.split('\n').map((paragraph) => (
+          <p>{paragraph}</p>
         ))}
       </div>
     </div>

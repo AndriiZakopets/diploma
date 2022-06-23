@@ -48,8 +48,8 @@ export const getMovie = async (req: Request, res: Response) => {
   }
 };
 
-async function getReviewAuthor(review) {
-  const user = await User.findById(review.authorId);
+async function getReviewAuthor(authorId) {
+  const user = await User.findById(authorId);
   return user?.username || 'Deleted user';
 }
 
@@ -57,13 +57,14 @@ export const getMovieReviews = async (req: Request, res: Response) => {
   try {
     const movieId = req.params.movieId;
 
-    const rawReviews = await Review.find({ movieId });
+    const rawReviews = await Review.find({ movieId }).sort('-createdAt');
     const reviews = await Promise.all(
       rawReviews.map(async (review) => {
         const author = await getReviewAuthor(review.authorId);
 
         return {
           author,
+          id: review.id,
           content: review.content,
           createdAt: review.createdAt,
         };
@@ -91,6 +92,7 @@ export const createReview = async (req, res) => {
 
     res.json({
       author,
+      id: review.id,
       content: review.content,
       createdAt: review.createdAt,
     });

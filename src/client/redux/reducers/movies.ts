@@ -5,12 +5,14 @@ import type { User } from '../../../shared/types';
 interface MoviesState {
   movies;
   page: number;
+  totalPages: number;
   isLoading: boolean;
 }
 
 const initialState = {
   movies: [],
-  page: 1,
+  page: 0,
+  totalPages: 1,
   isLoading: false,
 } as MoviesState;
 
@@ -25,20 +27,17 @@ const appSlice = createSlice({
       })
       .addCase(actions.movies.search.fulfilled, (state, action: any) => {
         state.isLoading = false;
-        state.movies = action.payload.movies;
+        state.totalPages = action.payload.data.totalPages;
+        state.page = action.payload.data.page;
+        const shouldClearOld = action.payload.shouldClearOld;
+
+        if (shouldClearOld) {
+          state.movies = action.payload.data.movies;
+        } else {
+          state.movies = [...state.movies, ...action.payload.data.movies];
+        }
       })
       .addCase(actions.movies.search.rejected, (state, action: any) => {
-        state.isLoading = false;
-        state.movies = [];
-      })
-      .addCase(actions.movies.init.pending, (state, action: any) => {
-        state.isLoading = true;
-      })
-      .addCase(actions.movies.init.fulfilled, (state, action: any) => {
-        state.isLoading = false;
-        state.movies = action.payload.movies;
-      })
-      .addCase(actions.movies.init.rejected, (state, action: any) => {
         state.isLoading = false;
         state.movies = [];
       });

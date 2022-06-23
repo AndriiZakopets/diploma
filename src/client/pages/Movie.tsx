@@ -1,28 +1,51 @@
 import React from 'react';
+import { useSelector } from '../redux';
 import { useParams } from 'react-router-dom';
 import * as api from '../services/api';
 import Review from '../components/Review/Review';
+import CommentBox from '../components/CommentBox/CommentBox';
+import CircularProgressWithLabel from '../components/CircularProgressWithLabel';
 
 import styles from './Movie.module.scss';
 
 function Movie() {
+  const user = useSelector((state) => state.app.user);
   let { id } = useParams();
   const [movie, setMovie] = React.useState(null);
-  const [reviews, setReviews] = React.useState(null);
+  const [reviews, setReviews] = React.useState([]);
   const releaseYear = React.useMemo(
     () => movie?.release_date.split('-')[0],
     [movie]
   );
-  React.useEffect(() => {
-    api.tmdbGet(`/movie/${id}`).then(({ data }) => {
-      setMovie(data);
-    });
-    api.tmdbGet(`/movie/${id}/reviews`).then(({ data }) => {
-      setReviews(data.results);
-    });
-  }, []);
 
-  if (!movie || !reviews) return null;
+  React.useEffect(() => {
+    api.getMovie(id).then(setMovie);
+    api.getMovieReviews(id).then(setReviews);
+  }, [id]);
+
+  const onCommentSubmit = (content: string) => {
+    api.createMovieReview(id, content).then((data) =>
+      setReviews((prev) => {
+        console.log(data);
+        return [{ ...data, isNew: true }, ...prev];
+      })
+    );
+  };
+
+  if (!movie)
+    return (
+      <div
+        style={{
+          display: 'flex',
+          fontSize: 20,
+          marginTop: '150px',
+          width: '100%',
+          justifyContent: 'center',
+        }}
+      >
+        Movie with given id is not found
+      </div>
+    );
 
   return (
     <div className={styles.container}>
@@ -54,7 +77,9 @@ function Movie() {
                 </h2>
               </div>
               <div className={styles.score}>
-                <div>{movie.vote_average * 10} %</div>
+                <div>
+                  <CircularProgressWithLabel value={movie.vote_average * 10} />
+                </div>
                 <span>User Score</span>
               </div>
               <div className={styles.info}>
@@ -66,6 +91,7 @@ function Movie() {
           </div>
         </div>
       </div>
+      {user && <CommentBox user={user} onSubmit={onCommentSubmit} />}
       <div className={styles.reviews}>
         {reviews.map((review) => (
           <Review review={review} key={review.id} />
