@@ -2,12 +2,16 @@ import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 
 import User from '../../models/User';
+import type { User as UserType } from 'shared/types';
 import { HASH, JWT_SECRET } from '../../config';
 
-const createToken = (user: any) =>
-  jwt.sign({ userId: user.id }, JWT_SECRET, {
+const createToken = (user: UserType) => {
+  const token = jwt.sign({ userId: user.id }, JWT_SECRET, {
     expiresIn: '1d',
   });
+
+  return token;
+};
 
 export const login = async (req, res) => {
   try {
