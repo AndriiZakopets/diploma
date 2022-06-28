@@ -12,7 +12,7 @@ const createToken = (user: UserType) => {
 
   return token;
 };
-bug bug2
+
 export const login = async (req, res) => {
   try {
     const { email, password } = req.body;
